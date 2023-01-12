@@ -14,9 +14,15 @@
 #         if n is even add one to n
 
 
+def createBlankSpiral(size):
+    spiral = [[x for x in size] for i in size]
+    print(spiral)
+
 
 def create_spiral(n):
-    print("REMOVE THIS PRINT AND ADD YOUR CODE")
+    inFile = open("spiral.in", 'r')
+    spiral_Size = inFile.readline()
+    createBlankSpiral(spiral_Size)
     
 # Input: spiral is a 2-D list and n is an integer
 # Output: returns an integer that is the sum of the
