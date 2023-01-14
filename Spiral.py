@@ -28,31 +28,58 @@ def addToSpiral(spiral, spiralPoition, number):
     column = spiralPoition[1]
     spiral[row][column] = number
 
-def movePostion(spiralPostion, direction, travelLimit):
+def changeDirection(direction, traveled, travelLimit):
+    if direction == 'r':
+        return 'u'
+    elif direction == 'd':
+        return 'r'
+    elif direction == 'l':
+        return 'd'
+    else:
+        return 'l'
 
-    moveRight = (0, 1)
-    moveLeft = (0, -1)
-    moveUp = (1, 0)
-    moveDown = (-1, 0)
+def movePostion(spiralPosition, direction, travelLimit):
+
+    if direction == 'r':
+        spiralPosition[1] += 1
+    elif direction == 'l':
+        spiralPosition[1] -= 1
+    elif direction == 'u':
+        spiralPosition[0] += 1
+    else:
+        spiralPosition[0] -= 1
 
 
 def create_spiral(spiralSize):
 
     spiral = createBlankSpiral(spiralSize)
     # calls the function to create a blank spiral
-
     number = 1
     # the number that will be added to the spiral
+    directionTruns = 0
+    # number of times the direction has changed
+    traveled = 0
+    # the number of times the sprial has moved in one direction
     travelLimit = 1
     # length the sprial can go in one direction before changing direction
-    spiralPosition = (math.ceil(spiralSize), math.ceil(spiralSize))
+    direction = 'r'
+    # the current direction the sprial is moving in
+    spiralPosition = [math.floor(spiralSize/2), math.floor(spiralSize/2)]
     """Variables for the position on the spiral in terms of row and column.
-    math.ceil(spiralSize) makes the variables start in the middle of the sprial"""
+    math.floor(spiralSize) makes the variables start in the middle of the sprial"""
 
     while number <= spiralSize ** 2:
         addToSpiral(spiral, spiralPosition, number)
-
-
+        if traveled == travelLimit:
+            direction = changeDirection(direction, traveled, travelLimit)
+            traveled = 0
+            directionTruns += 1
+        if directionTruns == 2:
+            travelLimit += 1
+            directionTruns = 0
+        movePostion(spiralPosition, direction, travelLimit)
+        traveled += 1
+        number += 1
     return spiral
     
     
@@ -75,7 +102,8 @@ def main():
 
     # create the spiral
     spiral = create_spiral(spiralSize)
-    print(spiral)
+    for i in range(len(spiral)):
+        print(spiral[i])
 
 # add the adjacent numbers
 
