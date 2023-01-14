@@ -22,8 +22,18 @@ def createBlankSpiral(spiralSize):
     blankSpiral = [[x for x in size] for i in size]
     return blankSpiral
 
-def addToSpiral(direction, travelLimit, rowPosition, columnPosition, number):
-    pass
+def addToSpiral(spiral, spiralPoition, number):
+    # adds the next number to the spiral at the current position
+    row = spiralPoition[0]
+    column = spiralPoition[1]
+    spiral[row][column] = number
+
+def movePostion(spiralPostion, direction, travelLimit):
+
+    moveRight = (0, 1)
+    moveLeft = (0, -1)
+    moveUp = (1, 0)
+    moveDown = (-1, 0)
 
 
 def create_spiral(spiralSize):
@@ -35,12 +45,13 @@ def create_spiral(spiralSize):
     # the number that will be added to the spiral
     travelLimit = 1
     # length the sprial can go in one direction before changing direction
-    direction = 'right'
-    # current direction that the spiral is added in
-    rowPosition = math.ceil(spiralSize/2)
-    columnPosition = math.ceil(spiralSize/2)
+    spiralPosition = (math.ceil(spiralSize), math.ceil(spiralSize))
     """Variables for the position on the spiral in terms of row and column.
     math.ceil(spiralSize) makes the variables start in the middle of the sprial"""
+
+    while number <= spiralSize ** 2:
+        addToSpiral(spiral, spiralPosition, number)
+
 
     return spiral
     
