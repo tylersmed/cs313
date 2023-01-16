@@ -28,7 +28,7 @@ def addToSpiral(spiral, spiralPoition, number):
     column = spiralPoition[1]
     spiral[row][column] = number
 
-def changeDirection(direction, traveled, travelLimit):
+def changeDirection(direction):
     if direction == 'r':
         return 'u'
     elif direction == 'd':
@@ -38,7 +38,7 @@ def changeDirection(direction, traveled, travelLimit):
     else:
         return 'l'
 
-def movePostion(spiralPosition, direction, travelLimit):
+def movePostion(spiralPosition, direction):
 
     if direction == 'r':
         spiralPosition[1] += 1
@@ -48,7 +48,6 @@ def movePostion(spiralPosition, direction, travelLimit):
         spiralPosition[0] += 1
     else:
         spiralPosition[0] -= 1
-
 
 def create_spiral(spiralSize):
 
@@ -71,13 +70,13 @@ def create_spiral(spiralSize):
     while number <= spiralSize ** 2:
         addToSpiral(spiral, spiralPosition, number)
         if traveled == travelLimit:
-            direction = changeDirection(direction, traveled, travelLimit)
+            direction = changeDirection(direction)
             traveled = 0
             directionTruns += 1
         if directionTruns == 2:
             travelLimit += 1
             directionTruns = 0
-        movePostion(spiralPosition, direction, travelLimit)
+        movePostion(spiralPosition, direction)
         traveled += 1
         number += 1
     return spiral
@@ -87,8 +86,29 @@ def create_spiral(spiralSize):
 # Output: returns an integer that is the sum of the
 #         numbers adjacent to n in the spiral
 #         if n is outside the range return 0
-def sum_adjacent_numbers(spiral, n):
-    print("REMOVE THIS PRINT AND ADD YOUR CODE")
+
+def locate_num(spiral, num):
+    location = [0, 0]
+    for row in spiral:
+        if num in row:
+            location[1] = row.index(num)
+            break
+        location[0] += 1   
+    return location
+    
+def position_exists(spiral, position):
+    length = len(spiral)
+    if (position[0] or position[1] <= 0) or (position[0] or position[1] > length):
+        return False
+    else:
+        return True
+
+
+def sum_adjacent_numbers(spiral, num):
+    spiral_position = locate_num(spiral, num)
+    sum = 0
+    print(position_exists(spiral, [10, 0]))
+
 
 
 def main():
@@ -104,6 +124,12 @@ def main():
     spiral = create_spiral(spiralSize)
     for i in range(len(spiral)):
         print(spiral[i])
+
+    line = int(inFile.readline())
+    while line:
+        sum = sum_adjacent_numbers(spiral, line)
+        print(sum)
+        line = int(inFile.readline())
 
 # add the adjacent numbers
 
