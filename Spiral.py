@@ -7,7 +7,7 @@
 #  Course Name: CS 313E
 #  Unique Number: 52020
 #  Date Created: 01/12/2023
-#  Date Last Modified:
+#  Date Last Modified: 01/17/2023
 
 # Input: n is an odd integer between 1 and 100
 # Output: returns a 2-D list representing a spiral
@@ -29,6 +29,8 @@ def addToSpiral(spiral, spiralPoition, number):
     spiral[row][column] = number
 
 def changeDirection(direction):
+    """based on the current direction, returns the next direction
+    in order of r -> u -> l -> d -> r"""
     if direction == 'r':
         return 'u'
     elif direction == 'd':
@@ -39,7 +41,7 @@ def changeDirection(direction):
         return 'l'
 
 def movePostion(spiralPosition, direction):
-
+    # moves the current position on the spiral one spot over in the given direction
     if direction == 'r':
         spiralPosition[1] += 1
     elif direction == 'l':
@@ -53,34 +55,34 @@ def movePostion(spiralPosition, direction):
 
 def create_spiral(spiralSize):
 
-    spiral = createBlankSpiral(spiralSize)
-    # calls the function to create a blank spiral
-    number = 1
-    # the number that will be added to the spiral
-    directionTruns = 0
-    # number of times the direction has changed
-    traveled = 0
-    # the number of times the sprial has moved in one direction
-    travelLimit = 1
-    # length the sprial can go in one direction before changing direction
-    direction = 'r'
-    # the current direction the sprial is moving in
+    spiral = createBlankSpiral(spiralSize)  # calls the function to create a blank spiral
+    number = 1               # the number that will be added to the spiral
+    directionTurns = 0       # number of times the direction has changed
+    traveled = 0             # the number of times the sprial has moved in one direction
+    travelLimit = 1          # length the sprial can go in one direction before changing direction
+    direction = 'r'          # the current direction the sprial is moving in
     spiralPosition = [math.floor(spiralSize/2), math.floor(spiralSize/2)]
     """Variables for the position on the spiral in terms of row and column.
     math.floor(spiralSize) makes the variables start in the middle of the sprial"""
 
     while number <= spiralSize ** 2:
+        # once number = spiralSize ** 2, the spiral will be full
         addToSpiral(spiral, spiralPosition, number)
         if traveled == travelLimit:
             direction = changeDirection(direction)
             traveled = 0
-            directionTruns += 1
-        if directionTruns == 2:
+            directionTurns += 1
+            """once the distance moved in one direction = travelLimit, 
+            the direction numbers are added in must change"""
+        if directionTurns == 2:
             travelLimit += 1
-            directionTruns = 0
+            directionTurns = 0
+            """After two direction changes, the travel limit must increase so 
+            that the spiral can expand"""
         movePostion(spiralPosition, direction)
         traveled += 1
         number += 1
+        
     return spiral
     
 # Input: spiral is a 2-D list and n is an integer
