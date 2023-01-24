@@ -14,6 +14,7 @@
 #         if n is even add one to n
 
 import math
+import sys
 
 def createBlankSpiral(spiralSize):
     """creates a two dimensional list where the length of every list is the arbitrary integer 
@@ -96,8 +97,7 @@ def locate_num(spiral, num):
         if num in row:
             location[1] = row.index(num)
             break
-        location[0] += 1
-    print(location)   
+        location[0] += 1 
     return location
     
 def position_exists(spiral, position):
@@ -123,12 +123,11 @@ def sum_adjacent_numbers(spiral, num):
 
     return sum
 
-
-
 def main():
 
-    inFile = open('spiral.in', 'r')
-    spiralSize = int(inFile.readline())
+    inFile = sys.stdin.read().strip().split('\n')
+    spiralSize = int(inFile[0])
+    inFile.pop(0)
     if spiralSize % 2 == 0: spiralSize += 1
     """Takes the first line from spiral.in and converts it to an integer.
     If the first number in the file was even, it is increased by one.
@@ -136,18 +135,10 @@ def main():
 
     # create the spiral
     spiral = create_spiral(spiralSize)
-    for i in range(len(spiral)):
-        print(spiral[i])
 
-    line = inFile.readline()
-    while line:
-        sum = sum_adjacent_numbers(spiral, int(line))
+    for num in inFile:
+        sum = sum_adjacent_numbers(spiral, int(num))
         print(sum)
-        line = inFile.readline()
-
-# add the adjacent numbers
-
-# print the result
 
 if __name__ == "__main__":
     main()
