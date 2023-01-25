@@ -20,17 +20,17 @@ def crt_padded_enc(strng):
 def crt_padded_dec(strng):
     # Creates a version of the string to be dectypted as a padded message
     sqr_len = math.ceil(math.sqrt(len(strng)))
-    padded_msg = [[] for i in range(sqr_len)]
+    padded_msg = [['*' for x in range(sqr_len)] for i in range(sqr_len)]
     chr_lst = list(strng)
     x = math.ceil(len(chr_lst) / sqr_len)
 
-    for row in range(sqr_len):
-        for col in range(-x, 0):
+    for col in range(sqr_len):
+        for i in range(x):
             if not chr_lst:
                 break
             else:
-                padded_msg[row].insert(0, chr_lst.pop(0))
-    print(padded_msg)
+                padded_msg[col].remove('*')
+                padded_msg[col] += [chr_lst.pop(0)]
 
     return padded_msg
 
