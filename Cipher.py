@@ -3,11 +3,11 @@ import sys
 import math
 
 def crt_padded_enc(strng):
-    # creates a version of the string as a padded message
+    # creates a version of the string to be encoded as a padded message
     sqr_len = math.ceil(math.sqrt(len(strng)))
     paddded_msg = [['*' for x in range(sqr_len)] for i in range(sqr_len)]
-
     chr_lst = list(strng)
+
     for row in range(sqr_len):
         for col in range(sqr_len):
             if not chr_lst:
@@ -18,7 +18,21 @@ def crt_padded_enc(strng):
     return paddded_msg
 
 def crt_padded_dec(strng):
-    pass
+    # Creates a version of the string to be dectypted as a padded message
+    sqr_len = math.ceil(math.sqrt(len(strng)))
+    padded_msg = [[] for i in range(sqr_len)]
+    chr_lst = list(strng)
+    x = math.ceil(len(chr_lst) / sqr_len)
+
+    for row in range(sqr_len):
+        for col in range(-x, 0):
+            if not chr_lst:
+                break
+            else:
+                padded_msg[row].insert(0, chr_lst.pop(0))
+    print(padded_msg)
+
+    return padded_msg
 
 def rotate_right(msg):
     
@@ -37,15 +51,13 @@ def rotate_left(msg):
 
     lst = []
     if len(msg[1]) == 1:
-        lst = [msg[row][0] for row in range(len(msg)-1, -1, -1)]
-        lst.reverse()
+        lst = [msg[row][0] for row in range(len(msg))]
         return lst
 
     else:
-        lst = [msg[row][-1] for row in range(len(msg)-1, -1, -1)]
+        lst = [msg[row][-1] for row in range(len(msg))]
         for i in range(len(msg)):
             msg[i].pop(-1)
-        lst.reverse()
         return lst + rotate_left(msg)
 
 # Input: strng is a string of 100 or less of upper case, lower case, 
@@ -70,7 +82,7 @@ def encrypt ( strng ):
 # Output: function returns an encrypted string 
 
 def decrypt ( strng ):
-    paddded_msg = crt_padded_enc(strng)
+    paddded_msg = crt_padded_dec(strng)
     rotated_msg = rotate_left(paddded_msg)
 
     decrypted_msg = ''
