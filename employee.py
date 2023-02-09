@@ -1,5 +1,5 @@
 #  File: employee.py
-#  Description:
+#  Description: Creates a class for a base employee and several sub classes of employees.
 #  Student Name: Tyler Smedley
 #  Student UT EID: tws933
 #  Partner Name:
