@@ -115,7 +115,7 @@ class Cube():
 
   # compute volume of a Cube
   # returns a floating point number
-    def volume(self):
+    def vol(self):
         self.volume = self.side ** 3
         return self.volume
 
@@ -149,17 +149,24 @@ class Cube():
   # other is a Cube object
   # returns a Boolean
     def is_inside_cube(self, other):
-         # implement here ...
-
-          return True 
+        dist_centers = self.center.distance(other.center)
+        if dist_centers < other.side and self.side != other.side:
+            return True 
+        else:
+            return False
 
 
 # Implement this Method
 # Checks if two shapes, cubes or sphere have the same volume
     def has_same_volume(self, other) -> bool:
-        # implement here ...
-        
-
-        return True
+        x = self.vol()
+        if isinstance(other, Cube):
+            y = other.vol()
+        else:
+            y = other.volume()
+        if abs(x-y) < 0.0001:
+            return True
+        else:
+            return False
 
 

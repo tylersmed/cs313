@@ -15,11 +15,12 @@ class TestGeometry(unittest.TestCase):
 
         self.one_radius_sphere = Sphere(0, 0, 0, 1)
         self.ten_radius_sphere = Sphere(0, -1, 0, 10)
+        self.eleven_radius_sphere = Sphere(0, 0, 0, 11)
 
         self.one_cube = Cube(0, 0, 0, 1)
         self.ten_cube = Cube(0, 0, 0, 10)
 
-    
+      
 
     def test_001_point_distance(self):
         self.assertEqual(int(self.one_above_origin.distance(self.one_under_origin)), 2)
@@ -31,35 +32,45 @@ class TestGeometry(unittest.TestCase):
 
     #TODO! Implement this 
     def test_002_point_equality(self):
-        # ... Implement here and remove pass 
-        pass
+        self.assertTrue(self.origin.__eq__(self.origin))
+        self.assertFalse(self.origin.__eq__(self.one_above_origin))
 
     #TODO! Implement this 
     def test_003_sphere_area(self):
-        pass 
-
+        self.assertAlmostEqual(self.one_radius_sphere.area(), 12.56637, 5)
+        self.assertAlmostEqual(self.ten_radius_sphere.area(), 1256.63706, 5)
     
     #TODO! Implement this 
     def test_004_sphere_volume(self):
-        pass
+        self.assertAlmostEqual(self.one_radius_sphere.volume(), 4.18879, 5)
+        self.assertAlmostEqual(self.ten_radius_sphere.volume(), 4188.7902, 4)
 
     #TODO! Implement this 
     def test_005_sphere_is_inside_point(self):
-        pass
+        self.assertTrue(self.one_radius_sphere.is_inside_point(self.origin))
+        self.assertFalse(self.one_radius_sphere.is_inside_point(self.one_above_origin))
+        self.assertTrue(self.ten_radius_sphere.is_inside_point(self.one_above_origin))
+        self.assertFalse(self.ten_radius_sphere.is_inside_point(self.out_point))
 
 
     #TODO! Implement this 
     def test_006_sphere_is_inside_sphere(self):
-        pass
+        self.assertTrue(self.ten_radius_sphere.is_inside_sphere(self.one_radius_sphere))
+        self.assertFalse(self.one_radius_sphere.is_inside_sphere(self.ten_radius_sphere))
 
 
    #TODO! Implement this 
     def test_006_cube_is_inside_point(self):
-        pass
+        self.assertTrue(self.one_cube.is_inside_point(self.origin))
+        self.assertFalse(self.one_cube.is_inside_point(self.one_above_origin))
+        self.assertTrue(self.ten_cube.is_inside_point(self.one_above_origin))
+        self.assertFalse(self.ten_cube.is_inside_point(self.out_point))
 
    #TODO! Implement this 
     def test_007_is_inside_sphere(self):
-        pass
+        self.assertTrue(self.ten_cube.is_inside_sphere(self.one_radius_sphere))
+        self.assertFalse(self.ten_cube.is_inside_sphere(self.ten_radius_sphere))
+        self.assertFalse(self.one_cube.is_inside_sphere(self.ten_radius_sphere))
 
 
 
@@ -72,9 +83,9 @@ class TestGeometry(unittest.TestCase):
         self.assertFalse(self.one_cube.is_inside_cube(self.one_cube))
 
     def test_000_has_same_volume(self): 
-        self.assertTrue(self.one_cube.has_same_volume(self.one_cube)) 
-
-
+        self.assertTrue(self.one_cube.has_same_volume(self.one_cube))
+        self.assertFalse(self.one_cube.has_same_volume(self.ten_cube))
+        self.assertFalse(self.one_cube.has_same_volume(self.one_radius_sphere))
 
 
 if __name__ == '__main__':
