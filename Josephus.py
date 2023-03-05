@@ -37,6 +37,8 @@ class CircularList(object):
             return None
 
     def data_in_lst(self, data):
+        if self.first == None:
+            return False
         start = self.first.data
         current = self.first
         while current.next.data != start:
@@ -54,6 +56,9 @@ class CircularList(object):
         if del_this == None:
             return None
         previous = del_this.next
+        if previous.data == del_this.data:
+            self.first = None
+            return None
         while previous.next.data != del_this.data:
             previous = previous.next
         if previous.next.data > del_this.next.data:
@@ -77,6 +82,8 @@ class CircularList(object):
     # The format of the string will be the same as the __str__
     # format for normal Python lists
     def __str__ ( self ):
+        if self.first == None:
+            return "[]"
         first = self.first.next.data
         lst = ''
         current = self.first.next
@@ -114,7 +121,6 @@ def main():
         x = soldierCircle.delete_after(current_soldier.data, elim_num)
         deltd_sold, current_soldier = x
         print(deltd_sold)
-    
     print(current_soldier)
     
 if __name__ == "__main__":
