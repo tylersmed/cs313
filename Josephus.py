@@ -37,6 +37,7 @@ class CircularList(object):
             return None
 
     def data_in_lst(self, data):
+        # Tests if a given data value is in the list
         if self.first == None:
             return False
         start = self.first.data
@@ -56,11 +57,13 @@ class CircularList(object):
         if del_this == None:
             return None
         previous = del_this.next
+        # If there is only one element in the list, return None for the now empty list
         if previous.data == del_this.data:
             self.first = None
             return None
         while previous.next.data != del_this.data:
             previous = previous.next
+        # if the first element in the list is deleted, change self.first
         if previous.next.data > del_this.next.data:
             self.first = previous
         previous.next = del_this.next
@@ -83,11 +86,14 @@ class CircularList(object):
     # format for normal Python lists
     def __str__ ( self ):
         if self.first == None:
+            # Print an empty list
             return "[]"
         first = self.first.next.data
         lst = ''
         current = self.first.next
         while current.next.data != first:
+            # iterate through list list starting with the value after self.first
+            # add the value to the returned string and stop adding when a full loop is made
             lst =  lst + str(current.data) + ', '
             current = current.next
         return '[' + lst + str(self.first.data) + ']'
@@ -117,11 +123,10 @@ def main():
     current_soldier = soldierCircle.find(start_count)
 
     # Do the eliminations and print which soldier gets eliminated each time
-    while current_soldier.next.data != current_soldier.data:
+    for i in range(num_soldiers):
         x = soldierCircle.delete_after(current_soldier.data, elim_num)
         deltd_sold, current_soldier = x
         print(deltd_sold)
-    print(current_soldier)
     
 if __name__ == "__main__":
     main()
