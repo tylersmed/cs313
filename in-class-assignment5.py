@@ -178,26 +178,40 @@ class BST():
 
         return True
 
+    def bst_to_lst(self, node):
+        if node != None:
+            return [node.data] + self.bst_to_lst(node.lChild) + self.bst_to_lst(node.rChild)
+        return []
+    
     def bst_size(self, node):
         if node != None:
             return 1 + self.bst_size(node.lChild) + self.bst_size(node.rChild)
         return 0
 
-    def bst_median(self):
-        start_size = self.bst_size(self.root)
+    def bst_median(self, node):
+        lst = self.bst_to_lst(node)
+        lst.sort()
+        mid = (len(lst)//2)-1
+        if len(lst) % 2 == 0:
+            return (lst[mid] + lst[mid+1])/2
+        else:
+            return lst[mid]    
+
+    def height(self, node):
+        if node == None:
+            return 0
+        else:
+            return max(self.height(node.lChild), self.height(node.rChild)) + 1
+
+    def is_balanced(self, node):
+        if node == None:
+            return True
+        lHeight = self.height(node.lChild)
+        rHeight = self.height(node.rChild)
+        if abs(lHeight-rHeight) <= 1 and self.is_balanced(node.lChild) and self.is_balanced(node.rChild):
+            return True
+        return False
         
-        current_size = self.bst_size(self.root)
-        while current_size != start_size//2:
-            self.delete(self.maximum().data)
-            current_size -= 1
-        return self.maximum().data
-
-
-    def height(self):
-        pass
-
-    def is_balanced(self):
-        pass
 
 ###############################
 #                             #
@@ -208,17 +222,23 @@ class BST():
 def main():
     bst = BST()
 
+    bst.insert(50)
+    bst.insert(25)
     bst.insert(10)
+    bst.insert(60)
+    bst.insert(70)
+    bst.insert(80)
+    bst.insert(65)
     bst.insert(40)
-    bst.insert(5)
-    bst.insert(15)
-    bst.insert(22)
-    bst.insert(4)
+    bst.insert(50)
 
-    print(bst.bst_size(bst.root))
-    print(bst.bst_median())
+    print("Size:", bst.bst_size(bst.root))
+    print("Median:", bst.bst_median(bst.root))
+    print("Height:", bst.height(bst.root))
+    print("Is balanced:", bst.is_balanced(bst.root))
+  
 
-    # bst.print(2)
+    # bst.print(0)
     # print("#########################################")
     # bst.delete(10)
     # bst.print(2)
