@@ -42,7 +42,27 @@ class Tree (object):
     # this function takes in the input string expr and 
     # creates the expression tree
     def create_tree (self, expr):
-        pass
+        self.root = Node()
+        tokens = expr.split()
+        stk = Stack()
+        current = self.root
+        print(tokens)
+        for token in tokens:
+            if token == '(':
+                current.lChild = Node()
+                stk.push(current)
+                current = current.lChild
+            elif token == ')':
+                if not stk.is_empty:
+                    current = stk.pop()
+            elif token in operators:
+                current.data = token
+                stk.push(current)
+                current.rChild = Node()
+                current = current.rChild
+            else:
+                current.data = token
+                current = stk.pop()
 
     # this function should evaluate the tree's expression
     # returns the value of the expression after being calculated
@@ -74,10 +94,10 @@ def main():
     print(expr, "=", str(tree.evaluate(tree.root)))
 
     # get the prefix version of the expression and print
-    print("Prefix Expression:", tree.pre_order(tree.root).strip())
+    # print("Prefix Expression:", tree.pre_order(tree.root).strip())
 
     # get the postfix version of the expression and print
-    print("Postfix Expression:", tree.post_order(tree.root).strip())
+    # print("Postfix Expression:", tree.post_order(tree.root).strip())
 
 if __name__ == "__main__":
     main()
