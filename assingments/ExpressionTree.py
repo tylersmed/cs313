@@ -46,7 +46,6 @@ class Tree (object):
         tokens = expr.split()
         stk = Stack()
         current = self.root
-        print(tokens)
         for token in tokens:
             if token == '(':
                 current.lChild = Node()
@@ -67,7 +66,21 @@ class Tree (object):
     # this function should evaluate the tree's expression
     # returns the value of the expression after being calculated
     def evaluate (self, aNode):
-        pass
+        if aNode.data == '+':
+            return self.evaluate(aNode.lChild) + self.evaluate(aNode.rChild)
+        elif aNode.data == '-':
+            return self.evaluate(aNode.lChild) - self.evaluate(aNode.rChild)
+        elif aNode.data == '*':
+            return self.evaluate(aNode.lChild) * self.evaluate(aNode.rChild)
+        elif aNode.data == '/':
+            return self.evaluate(aNode.lChild) / self.evaluate(aNode.rChild)
+        elif aNode.data == '**':
+            return self.evaluate(aNode.lChild) ** self.evaluate(aNode.rChild)
+        elif aNode.data == '%':
+            return self.evaluate(aNode.lChild) % self.evaluate(aNode.rChild)
+        
+        else:
+            return eval(aNode.data)
 
     # this function should generate the preorder notation of 
     # the tree's expression
