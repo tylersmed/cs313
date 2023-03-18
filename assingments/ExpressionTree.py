@@ -39,6 +39,13 @@ class Tree (object):
     def __init__ (self):
         self.root = None
     
+    def is_num(self, value):
+        try:
+            float(value)
+            return True
+        except:
+            return False
+        
     # this function takes in the input string expr and 
     # creates the expression tree
     def create_tree (self, expr):
@@ -48,20 +55,20 @@ class Tree (object):
         current = self.root
         for token in tokens:
             if token == '(':
-                current.lChild = Node()
                 stk.push(current)
+                current.lChild = Node()
                 current = current.lChild
-            elif token == ')':
-                if not stk.is_empty:
-                    current = stk.pop()
             elif token in operators:
                 current.data = token
                 stk.push(current)
                 current.rChild = Node()
                 current = current.rChild
-            else:
+            elif self.is_num(token):
                 current.data = token
                 current = stk.pop()
+            elif token == ')':
+                if not stk.is_empty():
+                    current = stk.pop()
 
     # this function should evaluate the tree's expression
     # returns the value of the expression after being calculated
@@ -78,9 +85,9 @@ class Tree (object):
             return self.evaluate(aNode.lChild) ** self.evaluate(aNode.rChild)
         elif aNode.data == '%':
             return self.evaluate(aNode.lChild) % self.evaluate(aNode.rChild)
-        
         else:
-            return eval(aNode.data)
+            if self.is_num(aNode.data):
+                return float(aNode.data)
 
     # this function should generate the preorder notation of 
     # the tree's expression
