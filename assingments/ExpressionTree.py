@@ -1,5 +1,6 @@
 #  File: ExpressionTree.py
-#  Description:
+#  Description: Given an infix expression, creates an expression tree, evaluates 
+    # the expression, and converts to the expressions prefix and postfix versions
 #  Student Name: Tyler Smedley
 #  Student UT EID: tws933
 #  Partner Name:
@@ -7,7 +8,7 @@
 #  Course Name: CS 313E
 #  Unique Number: 52020
 #  Date Created: 03/14/23
-#  Date Last Modified:
+#  Date Last Modified: 03/19/23
 
 import sys
 
@@ -39,6 +40,7 @@ class Tree (object):
     def __init__ (self):
         self.root = None
     
+    # this is a helper function to tell if a given string represents a number
     def is_num(self, value):
         try:
             float(value)
@@ -49,7 +51,7 @@ class Tree (object):
     # this function takes in the input string expr and 
     # creates the expression tree
     def create_tree (self, expr):
-        self.root = Node()
+        self.root = Node()  # the empty tree should be an empty node, not None
         tokens = expr.split()
         stk = Stack()
         current = self.root
@@ -73,34 +75,27 @@ class Tree (object):
     # this function should evaluate the tree's expression
     # returns the value of the expression after being calculated
     def evaluate (self, aNode):
-        if aNode.data == '+':
-            return self.evaluate(aNode.lChild) + self.evaluate(aNode.rChild)
-        elif aNode.data == '-':
-            return self.evaluate(aNode.lChild) - self.evaluate(aNode.rChild)
-        elif aNode.data == '*':
-            return self.evaluate(aNode.lChild) * self.evaluate(aNode.rChild)
-        elif aNode.data == '/':
-            return self.evaluate(aNode.lChild) / self.evaluate(aNode.rChild)
-        elif aNode.data == '**':
-            return self.evaluate(aNode.lChild) ** self.evaluate(aNode.rChild)
-        elif aNode.data == '%':
-            return self.evaluate(aNode.lChild) % self.evaluate(aNode.rChild)
-        else:
-            if self.is_num(aNode.data):
-                return float(aNode.data)
+        if self.is_num(aNode.data):
+            return float(aNode.data)
+            # return float here so eval() never returns an integer 
+        return eval(f"{self.evaluate(aNode.lChild)} {aNode.data} {self.evaluate(aNode.rChild)}")
 
     # this function should generate the preorder notation of 
     # the tree's expression
     # returns a string of the expression written in preorder notation
     def pre_order (self, aNode):
-        pass
+        if aNode == None:
+            return ''
+        return str(aNode.data) +' '+ self.pre_order(aNode.lChild) + self.pre_order(aNode.rChild)
 
     # this function should generate the postorder notation of 
     # the tree's expression
     # returns a string of the expression written in postorder notation
     def post_order (self, aNode):
-        pass
-
+        if aNode == None:
+            return ''
+        return self.post_order(aNode.lChild) + self.post_order(aNode.rChild) +' '+ str(aNode.data)
+        
 # you should NOT need to touch main, everything should be handled for you
 def main():
     # read infix expression
@@ -114,10 +109,10 @@ def main():
     print(expr, "=", str(tree.evaluate(tree.root)))
 
     # get the prefix version of the expression and print
-    # print("Prefix Expression:", tree.pre_order(tree.root).strip())
+    print("Prefix Expression:", tree.pre_order(tree.root).strip())
 
     # get the postfix version of the expression and print
-    # print("Postfix Expression:", tree.post_order(tree.root).strip())
+    print("Postfix Expression:", tree.post_order(tree.root).strip())
 
 if __name__ == "__main__":
     main()
