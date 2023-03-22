@@ -1,13 +1,13 @@
 #  File: TestBinaryTree.py
-#  Description: 
-#  Student Name: 
-#  Student UT EID:
+#  Description: Creates functions for a binary search function
+#  Student Name: Tyler Smedley
+#  Student UT EID: tws933
 #  Partner Name:
 #  Partner UT EID:
 #  Course Name: CS 313E
-#  Unique Number:
-#  Date Created:
-#  Date Last Modified:
+#  Unique Number: 52020
+#  Date Created: 3/14/23
+#  Date Last Modified: 3/21/23
 
 import sys
 
@@ -70,16 +70,17 @@ class Tree(object):
                 parent.rChild = new_node
             return
 
+    def bst_to_list(self, current):
+        if current == None:
+            return []
+        return [current.data] + self.bst_to_list(current.lChild) + self.bst_to_list(current.rChild)
+        
     # Returns the range of values stored in a binary search tree of integers.
     # The range of values equals the maximum value in the binary search tree minus the minimum value.
     # If there is one value in the tree the range is 0. If the tree is empty the range is undefined.
     def range(self):
-        if self.root == None:
-            return "undefined"
-        elif self.root.rChild == None and self.root.lChild == None:
-            return 0
-        else:
-            pass
+        bst_list = self.bst_to_list(self.root)
+        return max(bst_list) - min(bst_list)
 
     # Returns a list of nodes at a given level from left to right
     def get_level(self, level):
@@ -88,17 +89,22 @@ class Tree(object):
     # Returns the list of the node that you see from left side
     # The order of the output should be from top to down
     def left_side_view(self):
-        left_list = []
-        current = self.root
-        while current != None:
-            left_list.append(current.data)
-            current = current.rChild
-        return left_list
+        pass
 
+    # retruns a list of values that correspond to leaf nodes
+    def find_leaf_nodes(self, current):
+        if current == None:
+            return []
+        # only return a value if the current node is a leaf node
+        if current.rChild == None and current.lChild == None:
+            return [current.data]
+        return self.find_leaf_nodes(current.lChild) + self.find_leaf_nodes(current.rChild)
+    
     # returns the sum of the value of all leaves.
     # a leaf node does not have any children.
     def sum_leaf_nodes(self):
-        pass
+        leaf_nodes = self.find_leaf_nodes(self.root)
+        return sum(leaf_nodes)
         
 def make_tree(data):
     tree = Tree()
@@ -122,6 +128,7 @@ def main():
     print("Tree range is: ",   t1.range())
     print("Tree left side view is: ", t1.left_side_view())
     print("Sum of leaf nodes is: ", t1.sum_leaf_nodes())
+    # print("Height of tree is:", t1.get_height())
     print("##########################")
 
 # Another Tree for test.
@@ -135,6 +142,7 @@ def main():
     print("Tree range is: ",   t2.range())
     print("Tree left side view is: ", t2.left_side_view())
     print("Sum of leaf nodes is: ", t2.sum_leaf_nodes())
+    # print("Height of tree is:", t2.get_height())
     print("##########################")
 # Another Tree
     line = sys.stdin.readline()
@@ -147,6 +155,7 @@ def main():
     print("Tree range is: ",   t3.range())
     print("Tree left side view is: ", t3.left_side_view())
     print("Sum of leaf nodes is: ", t3.sum_leaf_nodes())
+    # print("Height of tree is:", t3.get_height())
     print("##########################")
 
 
