@@ -1,5 +1,5 @@
 #  File: TestBinaryTree.py
-#  Description: Creates functions for a binary search function
+#  Description: Creates functions for a binary search tree
 #  Student Name: Tyler Smedley
 #  Student UT EID: tws933
 #  Partner Name:
@@ -7,7 +7,7 @@
 #  Course Name: CS 313E
 #  Unique Number: 52020
 #  Date Created: 3/14/23
-#  Date Last Modified: 3/21/23
+#  Date Last Modified: 3/22/23
 
 import sys
 
@@ -81,15 +81,44 @@ class Tree(object):
     def range(self):
         bst_list = self.bst_to_list(self.root)
         return max(bst_list) - min(bst_list)
+    
+    # Given a node, returns its level within the tree
+    def find_node_level(self, current, aNode):
+        level = 0
+        while current.data != aNode.data:
+            if aNode.data > current.data:
+                current = current.rChild
+            else:
+                current = current.lChild
+            level += 1
+        return level
+    
+    # This is a helper function that is used to recursively iterate
+    # through the tree and returns all nodes that are at the desired level
+    def get_level_helper(self, level, current):
+        if current == None:
+            return []
+        # Only return a value if the node is at the correct height
+        elif self.find_node_level(self.root, current) == level:
+            return [current]
+        return self.get_level_helper(level, current.lChild) + self.get_level_helper(level, current.rChild)
 
     # Returns a list of nodes at a given level from left to right
     def get_level(self, level):
-        pass
+        nodes_in_level = self.get_level_helper(level, self.root)
+        return nodes_in_level
 
     # Returns the list of the node that you see from left side
     # The order of the output should be from top to down
     def left_side_view(self):
-        pass
+        height = self.root.get_height()
+        left_nodes = []
+        # only the first value in the list returned by get_level()
+        # would be seen from a left side view
+        for level in range(height):
+            level_nodes = self.get_level(level)
+            left_nodes.append(level_nodes[0].data)
+        return left_nodes
 
     # retruns a list of values that correspond to leaf nodes
     def find_leaf_nodes(self, current):
@@ -128,7 +157,6 @@ def main():
     print("Tree range is: ",   t1.range())
     print("Tree left side view is: ", t1.left_side_view())
     print("Sum of leaf nodes is: ", t1.sum_leaf_nodes())
-    # print("Height of tree is:", t1.get_height())
     print("##########################")
 
 # Another Tree for test.
@@ -142,8 +170,8 @@ def main():
     print("Tree range is: ",   t2.range())
     print("Tree left side view is: ", t2.left_side_view())
     print("Sum of leaf nodes is: ", t2.sum_leaf_nodes())
-    # print("Height of tree is:", t2.get_height())
     print("##########################")
+
 # Another Tree
     line = sys.stdin.readline()
     line = line.strip()
@@ -155,7 +183,6 @@ def main():
     print("Tree range is: ",   t3.range())
     print("Tree left side view is: ", t3.left_side_view())
     print("Sum of leaf nodes is: ", t3.sum_leaf_nodes())
-    # print("Height of tree is:", t3.get_height())
     print("##########################")
 
 
