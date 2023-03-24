@@ -153,17 +153,24 @@ class ImageGraph:
 
     # sets the visited flag to False for all nodes
     def reset_visited(self):
-        for i in range(len(self.nodes.index)):
+        for i in range(len(self.nodes)):
             self.nodes[i].visited = False
 
     # implement your adjacency matrix printing here.
     def print_adjacency_matrix(self):
         print("Adjacency matrix:")
-        print(self.nodes)
-        # lst = [[x for x in range(self.image_size)] for i in range(self.image_size)]
-        # print(lst)
-        # raise NotImplementedError("Remove this exception and print the adjacency matrix here.")
+        adj_mtrx = [[0 for i in range(len(self.nodes))] for j in range(len(self.nodes))]
 
+        """if node at index y is an edge of the node at index x
+        set the location (x, y) in the adj matrix to 1"""
+        for x in range(len(adj_mtrx)):
+            for y in range(len(adj_mtrx)):
+                if y in self.nodes[x].edges:
+                    adj_mtrx[x][y] = 1
+
+        # format printing of adjacency matrix
+        for x in adj_mtrx:
+            print(''.join(str(val) for val in x))
         # empty line afterwards
         print()
 
