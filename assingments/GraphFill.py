@@ -53,53 +53,53 @@ def print_block(color):
 
 # Stack class; you can use this for your search algorithms
 class Stack(object):
-  def __init__(self):
-    self.stack = []
+    def __init__(self):
+        self.stack = []
 
-  # add an item to the top of the stack
-  def push(self, item):
-    self.stack.append(item)
+    # add an item to the top of the stack
+    def push(self, item):
+        self.stack.append(item)
 
-  # remove an item from the top of the stack
-  def pop(self):
-    return self.stack.pop()
+    # remove an item from the top of the stack
+    def pop(self):
+        return self.stack.pop()
 
-  # check the item on the top of the stack
-  def peek(self):
-    return self.stack[-1]
+    # check the item on the top of the stack
+    def peek(self):
+        return self.stack[-1]
 
-  # check if the stack if empty
-  def is_empty(self):
-    return len(self.stack) == 0
+    # check if the stack if empty
+    def is_empty(self):
+        return len(self.stack) == 0
 
-  # return the number of elements in the stack
-  def size(self):
-    return len(self.stack)
+    # return the number of elements in the stack
+    def size(self):
+        return len(self.stack)
 
 # Queue class; you can use this for your search algorithms
 class Queue(object):
-  def __init__(self):
-    self.queue = []
+    def __init__(self):
+        self.queue = []
 
-  # add an item to the end of the queue
-  def enqueue(self, item):
-    self.queue.append(item)
+    # add an item to the end of the queue
+    def enqueue(self, item):
+        self.queue.append(item)
 
-  # remove an item from the beginning of the queue
-  def dequeue(self):
-    return self.queue.pop(0)
+    # remove an item from the beginning of the queue
+    def dequeue(self):
+        return self.queue.pop(0)
 
-  # checks the item at the top of the Queue
-  def peek(self):
-    return self.queue[0]
+    # checks the item at the top of the Queue
+    def peek(self):
+        return self.queue[0]
 
-  # check if the queue is empty
-  def is_empty(self):
-    return len(self.queue) == 0
+    # check if the queue is empty
+    def is_empty(self):
+        return len(self.queue) == 0
 
-  # return the size of the queue
-  def size(self):
-    return len(self.queue)
+    # return the size of the queue
+    def size(self):
+        return len(self.queue)
 
 # class for a graph node; contains x and y coordinates, a color, a list of edges and
 # a flag signaling if the node has been visited (useful for serach algorithms)
@@ -153,14 +153,16 @@ class ImageGraph:
 
     # sets the visited flag to False for all nodes
     def reset_visited(self):
-        for i in range(len(self.nodes)):
+        for i in range(len(self.nodes.index)):
             self.nodes[i].visited = False
 
     # implement your adjacency matrix printing here.
     def print_adjacency_matrix(self):
         print("Adjacency matrix:")
-
-        raise NotImplementedError("Remove this exception and print the adjacency matrix here.")
+        print(self.nodes)
+        # lst = [[x for x in range(self.image_size)] for i in range(self.image_size)]
+        # print(lst)
+        # raise NotImplementedError("Remove this exception and print the adjacency matrix here.")
 
         # empty line afterwards
         print()
