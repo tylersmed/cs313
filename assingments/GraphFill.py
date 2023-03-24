@@ -161,8 +161,8 @@ class ImageGraph:
         print("Adjacency matrix:")
         adj_mtrx = [[0 for i in range(len(self.nodes))] for j in range(len(self.nodes))]
 
-        """if node at index y is an edge of the node at index x
-        set the location (x, y) in the adj matrix to 1"""
+        # if the node at index y is an edge of the node at index x,
+        # set the location (x, y) in the adj matrix to 1
         for x in range(len(adj_mtrx)):
             for y in range(len(adj_mtrx)):
                 if y in self.nodes[x].edges:
@@ -179,13 +179,27 @@ class ImageGraph:
     #   start_index is the index of the currently visited node
     #   color is the color to fill the area containing the current node with
     def bfs(self, start_index, color):
+
         # reset visited status
         self.reset_visited()
         # print initial state
         print("Starting BFS; initial state:")
         self.print_image()
 
-        raise NotImplementedError("Remove this exception and implement the bfs algorithm here.")
+        nodes_to_visit = Queue()
+        nodes_to_visit.enqueue(start_index)
+
+        while not nodes_to_visit.is_empty():
+            current = nodes_to_visit.dequeue()
+            # check if every vertex adjacent to the current node has not been visited
+            # and it is the right color. If it is, add it to the queue
+            for adj_vrtx in self.nodes[current].edges:
+                if adj_vrtx not in nodes_to_visit.queue and \
+                self.nodes[adj_vrtx].color == self.nodes[current].color:
+                    nodes_to_visit.enqueue(adj_vrtx)
+
+            self.nodes[current].visit_and_set_color(color)
+            self.print_image()
 
 
     # implement your dfs algorithm here. Call print_image() after coloring a node
@@ -198,9 +212,6 @@ class ImageGraph:
         # print initial state
         print("Starting DFS; initial state:")
         self.print_image()
-
-        raise NotImplementedError("Remove this exception and implement the dfs algorithm here.")
-
 
 def create_graph(data):
     # creates graph from read in data
