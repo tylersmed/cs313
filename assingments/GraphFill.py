@@ -1,5 +1,6 @@
 #  File: GraphFill.py
-#  Description:
+#  Description: Preforms as simple "bucket fill" on an image using a bfs and dfs search.
+    # Also gives a representation of the graph as an adjacency matrix
 #  Student Name: Tyler Smedley
 #  Student UT EID: tws933
 #  Partner Name:
@@ -7,7 +8,7 @@
 #  Course Name: CS 313E
 #  Unique Number: 52020
 #  Date Created: 03/23/23
-#  Date Last Modified:
+#  Date Last Modified: 03/25/23
 
 import os
 import sys
@@ -202,16 +203,40 @@ class ImageGraph:
             self.print_image()
 
 
+    # helper func for dfs. Given an node, returns the first adjacent node that 
+    # has not been visited and is the right color.
+    def get_adj_vertex(self, aNode):
+        for index in self.nodes[aNode].edges:
+            if not self.nodes[index].visited and self.nodes[index].color == self.nodes[aNode].prev_color:
+                return index
+        return -1
+
     # implement your dfs algorithm here. Call print_image() after coloring a node
     # Input: graph is the graph containing the nodes
     #   start_index is the index of the currently visited node
     #   color is the color to fill the area containing the current node with
     def dfs(self, start_index, color):
+
         # reset visited status
         self.reset_visited()
         # print initial state
         print("Starting DFS; initial state:")
         self.print_image()
+
+        nodes_to_visit = Stack()
+        nodes_to_visit.push(start_index)
+        self.nodes[start_index].visit_and_set_color(color)
+        self.print_image()
+
+        while not nodes_to_visit.is_empty():
+            x = self.get_adj_vertex(nodes_to_visit.peek())
+            if x == -1:
+                # if there is no adj node to the current node, pop to move back to the previous node
+                nodes_to_visit.pop()
+            else:
+                self.nodes[x].visit_and_set_color(color)
+                self.print_image()
+                nodes_to_visit.push(x)
 
 def create_graph(data):
     # creates graph from read in data
