@@ -158,6 +158,13 @@ def dijkstra(graph, start_node):
 #####    Implement this Function       ####
 ###########################################
 ###########################################
+def graph_edges(graph):
+  edges = []
+  for u in range(len(graph.adjMat)):
+    for v in range(len(graph.adjMat)):
+      if graph.adjMat[u][v] != 0:
+        edges.append([u, v, graph.adjMat[u][v]])
+  return edges
 
 def bellmann_ford(graph, start_node):
     '''
@@ -170,32 +177,21 @@ def bellmann_ford(graph, start_node):
     node_distances = defaultdict(lambda: float('inf'))
     node_distances[start_node] = 0
 
-# Implement the dijkstra algrorithm here.
-    visited = set() # list to mark visited nodes
-    pq = [] # list as a priority queue
-    heap.heappush(pq, (0,start_node))
+# Implement the bellmann ford algrorithm here.
+    edges = graph_edges(graph)
 
-    while pq:
-      _, node = heap.heappop(pq)
-      visited.add(node)
+    for i in range(1, len(graph.vertices)):
+      
+      for prnt, node, weight in edges:
+        if node_distances[node] > node_distances[prnt] + weight:
+          node_distances[node] = node_distances[prnt] + weight
+          parent_map[node] = prnt
 
-      adj_node_list = get_adj_nodes(graph, graph.get_index(node))
-      for adj_node, weight in adj_node_list:
-
-        if adj_node in visited:
-          continue
-
-        new_distance =  node_distances[node] + weight
-
-        if node_distances[adj_node] > new_distance:
-          parent_map[adj_node] = node
-          node_distances[adj_node] = new_distance
-          heap.heappush(pq, (new_distance, adj_node))
+    for prnt, node, weight in edges:
+      if node_distances[node] + weight < node_distances[prnt]:
+        print("Negative weight cycle exists")
 
     return parent_map, node_distances
-
-
-
 
 
 
@@ -222,7 +218,6 @@ def main():
   graph.add_directed_edge(2, 3, 6)
 
   print(graph)
-
 
   
   parent_map, node_distances = dijkstra(graph, 0)
