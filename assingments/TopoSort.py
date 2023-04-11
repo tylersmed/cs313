@@ -1,5 +1,5 @@
 import sys
-
+from collections import defaultdict
 
 class Stack(object):
     def __init__(self):
@@ -192,14 +192,42 @@ class Graph(object):
             (self.Vertices[i]).visited = False
 
         return cyclic
-        # determine if a directed graph has a cycle
-        # this function should return a boolean and not print the result
+    
+    # if there is an adjacent, unvisited node to a given node,
+    # returns that node
+    def next_unvisited_vert(self, vert):
+        for v in self.get_adj_vertexes(vert):
+            if not self.Vertices[v].visited:
+                return v
+        return -1
 
+    # helper function for has_cycle func.
+    # given a starting node, determines if there is a path
+    # within the graph to get back to that node. Returns a boolean
+    def has_cycle_helper(self, vert, stack):
+        # reset all nodes visited status
+        for node in self.Vertices:
+            node.visited = False
+        stack.push(vert)
+        while not stack.is_empty():
+            adj_vert = self.next_unvisited_vert(stack.peek())
+            if adj_vert == vert:
+                return True
+            elif adj_vert == -1:
+                stack.pop()
+            else:
+                self.Vertices[adj_vert].visited = True
+                stack.push(adj_vert)
+
+        return False
+
+    # determine if a directed graph has a cycle
+    # this function should return a boolean and not print the result
     def has_cycle(self):
-# ...
-
-
-
+        for vert in range(len(self.Vertices)):
+            if self.has_cycle_helper(vert, Stack()):
+                return True
+        return False
 
     # do the breadth first search in a graph
     def bfs(self, v):
@@ -246,12 +274,32 @@ class Graph(object):
         self.adjMat.pop(idx)
         self.Vertices.pop(idx)
 
+    # returns the first node in the graph that has no edge pointing to it
+    def find_incoming_vertex(self):
+        for vert in self.Vertices:
+            index = self.get_index(vert.label)
+            x = True
+            for row in self.adjMat:
+                if row[index] != 0:
+                    x = False
+            if x == True:
+                return self.Vertices[index]
+        return -1
+
     # return a list of vertices after a topological sort
     # this function should not print the list
     def toposort(self):
         topoList = []
-
-# Complete it!
+        # find the first incomming node, add it to the toposort list, delete the node
+        # from the graph and repeat until graph has one node left
+        for i in range(len(self.Vertices)):
+            incoming_vert = self.find_incoming_vertex()
+            if incoming_vert != -1:
+                adj_nodes = self.get_adj_vertexes(self.get_index(incoming_vert))
+                topoList.append(incoming_vert.label)
+                self.delete_vertex(incoming_vert.label)
+                for node in adj_nodes:
+                    self.delete_edge(incoming_vert, node)
 
         return topoList
 
