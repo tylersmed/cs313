@@ -18,9 +18,6 @@ class TestPrimsAlgorithm(unittest.TestCase):
         # YOUR CODE
 
 
-
-
-
     
     def test_prims_algorithm_with_graph1(self):
         # ...

@@ -47,12 +47,23 @@ class Graph:
                 e = e + 1
                 result.append([u, v, w])
                 self.apply_union(parent, rank, x, y)
-                
+        
+        tot_weight = 0
         for u, v, weight in result:
-            print("%d - %d: %d" % (u, v, weight))
+            # print("%d - %d: %d" % (u, v, weight))
+            tot_weight += weight
+        return tot_weight, result
 
 
+# class Edge:
+#     def __init__(self, node1, node2, weight):
+#         self.node1 = node1
+#         self.node2 = node2
+#         self.weight = weight
 
+#     def lst_rep(self):
+#         return [self.node1, self.node2, self.weight]
+        
   
   
 def main():
