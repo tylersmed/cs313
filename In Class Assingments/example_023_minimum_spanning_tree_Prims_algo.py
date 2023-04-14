@@ -161,6 +161,8 @@ class Graph(object):
     # Select a node to start with it. 
     selected[0] = True
     
+    result = []
+    tot_weight = 0 
     # print for edge and weight
     print("Edge : Weight\n")
     while (no_edge < V - 1):
@@ -170,7 +172,7 @@ class Graph(object):
         # For every vertex, find the all adjacent vertices
         #, get the edge weight from the vertex selected.
         # if the vertex is already in the set S, discard it otherwise
-        # choose another vertex nearest to selected vertex at the past step 
+        # choose another vertex nearest to selected vertex at the past step
         
         minimum =  sys.maxsize
         x = 0
@@ -185,9 +187,15 @@ class Graph(object):
                             x = i
                             y = j
         print(str(x) + "-" + str(y) + ":" + str(self.adjMat[x][y]))
+        if x != y:
+          edge = [x, y, self.adjMat[x][y]]
+          result.append(edge)
+          tot_weight += self.adjMat[x][y]
 
         selected[y] = True
         no_edge += 1
+        
+    return result, tot_weight
 
 
    
@@ -195,10 +203,9 @@ class Graph(object):
 
 def main():
   # create the Graph object
-  g1 = Graph()
+  """g1 = Graph()
   
   g1.add_verticies(range(7))
-
 
   g1.add_undirected_edge(0, 1, 30)
   g1.add_undirected_edge(0, 6, 10)
@@ -210,13 +217,25 @@ def main():
   g1.add_undirected_edge(4, 5, 21)
   g1.add_undirected_edge(5, 6, 22)
   
-  
-  
-
-  
-
   print(g1)
-  g1.prims()
+  g1.prims()"""
+
+  graph1 = Graph()
+  graph1.add_verticies(range(6))
+  graph1.add_undirected_edge(0, 2, 5)
+  graph1.add_undirected_edge(0, 3, 5)
+  graph1.add_undirected_edge(0, 4, 5)
+  graph1.add_undirected_edge(3, 5, 9)
+  # graph1.add_undirected_edge(2, 6, 1)
+  # graph1.add_undirected_edge(3, 5, 4)
+  # graph1.add_undirected_edge(4, 6, 1)
+  # graph1.add_undirected_edge(5, 6, 6)
+  # graph1.add_undirected_edge(6, 7, 3)
+
+  print(graph1)
+  graph1.prims()
+  result, weight = graph1.prims()
+  print(result, weight)
 
 
 if __name__ == "__main__":

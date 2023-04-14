@@ -32,46 +32,43 @@ class TestKruskalAlgorithm(unittest.TestCase):
 
     def test_kruskal_mst(self):
         # Compute the minimum spanning tree using Kruskal's algorithm
-        g1_weight, g1_mst = self.graph1.kruskal_algo()
-        print(g1_mst)
+        weight, mst = self.graph1.kruskal_algo()
+        print(weight, mst)
 
         # Assert that the total weight of the MST is correct
-        self.assertEqual(g1_weight ,18 )
+        self.assertEqual(weight ,18 )
 
         # Assert that the MST contains the correct edges
-        exp_g1_mst = [[0, 1, 2], [1, 2, 3], [1, 4, 5], [0, 3, 6]]
+        exp_mst = [[2, 6, 1], [4, 6, 1], [0, 1, 2], [1, 5, 2], [6, 7, 3], [3, 5, 4], [0, 2, 5]]
 
-        self.assertEqual(g1_mst, exp_g1_mst)
+        self.assertEqual(mst, exp_mst)
 
     def test_kruskal_mst_empty_graph(self):
         # Test with an empty graph
-        
+        weight, mst = self.empty_graph.kruskal_algo()
+        print(weight, mst)
 
-        # ... 
-
+        exp_mst = []
         
-        # self.assertEqual(   ,   )
+        self.assertEqual(mst, exp_mst)
         pass
 
     def test_kruskal_mst_single_vertex(self):
         # Test with a graph with a single vertex
-        # ...
+        weight, mst = self.single_vert_graph.kruskal_algo()
+        print(weight, mst)
 
-        # YOUR CODE
-        # self.assertEqual(   ,   )
-        pass
-
-
+        exp_mst = []
+        self.assertEqual(mst, exp_mst)
 
     def test_kruskal_mst_disconnected_graph(self):
         # Test with a disconnected graph
+        weight, mst = self.discnctd_graph.kruskal_algo()
+        print(weight, mst)
 
-        
-        # ...
 
-        expected_mst = [[0, 2, 5], [0, 3, 5], [0, 4, 5], [3, 5, 9]]
-        # self.assertEqual(   ,   )
-        pass
+        exp_mst = [[0, 2, 5], [0, 3, 5], [0, 4, 5], [3, 5, 9]]
+        self.assertEqual(mst, exp_mst)
 
 if __name__ == '__main__':
     unittest.main()

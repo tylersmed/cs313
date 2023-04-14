@@ -37,8 +37,15 @@ class Graph:
         for node in range(self.no_vertices):
             parent.append(node)
             rank.append(0)
-        
-        while e < self.no_vertices - 1:
+
+        connected_nodes = []
+        for x, y, _ in self.edges:
+            if x not in connected_nodes:
+                connected_nodes.append(x)
+            if y not in connected_nodes:
+                connected_nodes.append(y)
+
+        while e < len(connected_nodes)-1: #self.no_vertices - 1:
             u, v, w = self.edges[i]
             i = i + 1
             x = self.find(parent, u)
@@ -53,39 +60,39 @@ class Graph:
             # print("%d - %d: %d" % (u, v, weight))
             tot_weight += weight
         return tot_weight, result
-
-
-# class Edge:
-#     def __init__(self, node1, node2, weight):
-#         self.node1 = node1
-#         self.node2 = node2
-#         self.weight = weight
-
-#     def lst_rep(self):
-#         return [self.node1, self.node2, self.weight]
-        
-  
   
 def main():
   # create the Graph object
-  g1 = Graph(7)
+    # graph 1 test
+    """
+    graph1 = Graph(8)
+    graph1.add_edge(0, 1, 2)
+    graph1.add_edge(0, 2, 5)
+    graph1.add_edge(1, 3, 6)
+    graph1.add_edge(1, 5, 2)
+    graph1.add_edge(2, 6, 1)
+    graph1.add_edge(3, 5, 4)
+    graph1.add_edge(4, 6, 1)
+    graph1.add_edge(5, 6, 6)
+    graph1.add_edge(6, 7, 3)
 
+    print(graph1.edges)
+    print(graph1.kruskal_algo())
+    """
 
-  g1.add_edge(0, 1, 30)
-  g1.add_edge(0, 6, 10)
-  g1.add_edge(1, 4, 13)
-  g1.add_edge(1, 2, 15)
-  g1.add_edge(2, 3, 12)
-  g1.add_edge(3, 4, 16)
-  g1.add_edge(3, 5, 20)
-  g1.add_edge(4, 5, 21)
-  g1.add_edge(5, 6, 22)
+    # disconnected graph test
+    discnctd_graph = Graph(6)
+    discnctd_graph.add_edge(0, 2, 5)
+    discnctd_graph.add_edge(0, 3, 5)
+    discnctd_graph.add_edge(0, 4, 5)
+    discnctd_graph.add_edge(3, 5, 9)
+
+    print(discnctd_graph.edges)
+    print(discnctd_graph.kruskal_algo())
   
 
-  
-
-  print(g1.edges)
-  g1.kruskal_algo()
+#   print(g1.edges)
+#   g1.kruskal_algo()
 
 
 if __name__ == "__main__":
