@@ -1,7 +1,6 @@
 import sys
 
-# Add Your functions here
-
+# helper function to make the creation of the possible_best tuple more managable
 def possibleBest(h, m, price, incr, keep):
     rtrn = (incr[h-1]/100 * price[h-1]) + keep[h-1][m-price[h-1]][0]
     cost_rtrn = price[h-1] + keep[h-1][m-price[h-1]][1]
@@ -17,17 +16,14 @@ def max_profit(money, num_h, price, incr):
 
     for h in range(num_h+1):
         for m in range(money+1):
-
             if h == 0 or m ==0:
                 pass
-
+            
             elif price[h-1] <= m:
                 prev_best = (keep[h-1][m])
-                # possible best is a tuple with possible_best[0] equal to the 
+                # possible best is a tuple with possible_best[0] = total return in millions
+                # and possible_best[1] = total initial cost to get that return
                 possible_best = possibleBest(h, m, price, incr, keep)
-                # possible_best = ( ( (incr[h-1]/100 * price[h-1]) + keep[h-1][m-price[h-1]][0] ), ( price[h-1] + keep[h-1][m-price[h-1]][1] ) )
-                # possible_best = (round(possible_best[0], 2), possible_best[1])
-
                 if possible_best[0] > prev_best[0]:
                     keep[h][m] = possible_best
                 else:
@@ -36,20 +32,10 @@ def max_profit(money, num_h, price, incr):
             else:
                 keep[h][m] = keep[h-1][m]
 
+            # keep track of the best return seen to make returning max return eaiser
+            best_return = max(best_return, keep[h][m][0])
 
-
-    for i in keep:
-        print(i)
-    print()
-
-
-                
-
-
-
-# You are allowed to change the main function. 
-
-# Do not change the template file name. 
+    return best_return
 
 def main():
 
@@ -77,13 +63,10 @@ def main():
     for i in range(0, len(increase)):
         increase[i] = float(increase[i])
 
-
-
 # Add your implementation here .... 
     result =  max_profit(money, num_houses, prices, increase)
 
 # Add your functions and call them to generate the result. 
-
     print(result)
 
 main()
