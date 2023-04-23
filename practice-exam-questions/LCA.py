@@ -20,6 +20,7 @@ def lca(root, val1, val2):
     p1 = find_path(root, val1)
     p2 = find_path(root, val2)
 
+    # print([str(path.data) for path in p1], [str(path.data) for path in p2])
     p1idx = len(p1) - 1
     p2idx = len(p2) - 1
     while p1idx >= 0 and p2idx >= 0:
@@ -42,8 +43,8 @@ def find_path(root, val):
     if root.data == val:
         return []
     else:
-        lpath = ???
-        rpath = ???
+        lpath = find_path(root.left, val)
+        rpath = find_path(root.right, val)
 
         correct_path = lpath if lpath is not None else rpath
         return correct_path + [root] if correct_path is not None else None

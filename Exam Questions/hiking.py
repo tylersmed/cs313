@@ -1,10 +1,10 @@
-#  File: youtuber.py
+#  File: hiking.py
 
-#  Description: Determine if it is possible for Tom to find two different hotels so that he can live stream each trial exactly once
+#  Description: Determine if it is possible for Mary to find two different hotels so that she can travel to each trial exactly once
 
-#  Student Name:
+#  Student Name: Tyler Smedley
 
-#  Student UT EID:
+#  Student UT EID: tws933
 
 #  Course Name: CS 313E
 
@@ -159,11 +159,12 @@ class Graph (object):
     for i in range (nVert):
       (self.Vertices[i]).visited = False
 
-  def youtuber(self):
-    x = sum([vert.count(1)%2==1 for vert in self.adjMat]) 
-    return 1 <= x <= 2
-
-
+  def hiking(self):
+      # This is essentially finding an Eulerian path. We will know if this path is
+      # possible if all vertices, except two, have an even degree, so we will
+      # simply analyze the adjMat and find such points.
+      
+      return 1<= sum(vert.count(1)%2==1 for vert in self.adjMat) <= 2
 
 
 
@@ -187,7 +188,7 @@ def main():
         theGraph.add_undirected_edge(nei, to)
 
   # print result
-  print(theGraph.youtuber())
+  print(theGraph.hiking())
 
 if __name__ == "__main__":
   main()

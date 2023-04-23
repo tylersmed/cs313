@@ -1,14 +1,15 @@
-#  File: RightSum.py
+#  File: LeftSum.py
 
-#  Description: Get the right sum of the BST
+#  Description: Get the left sum of the BST
 
-#  Student Name:
+#  Student Name: Tyler Smedley
 
-#  Student UT EID:
+#  Student UT EID: tws933
 
 #  Course Name: CS 313E
 
 #  Unique Number: 86610
+
 
 import sys
 
@@ -66,9 +67,16 @@ class Tree (object):
         parent.rchild = new_node
 
   # ***There is no reason to change anything above this line***
+  def get_height (self):
+# Add your code here!
+    pass
 
-  # Returns an integer of the right sum of the BST
-  def get_right_sum(self):
+  def get_level (self, level):
+# Add your code here!
+    pass
+
+  # Returns an integer for the left sum of the BST
+  def get_left_sum(self):
     theQueue = [[self.root, 0]]
     final_list = []
     while theQueue:
@@ -78,17 +86,17 @@ class Tree (object):
         theQueue.append([nodeStuff[0].lchild, nodeStuff[1]+1])
       if nodeStuff[0].rchild:
         theQueue.append([nodeStuff[0].rchild, nodeStuff[1]+1])
-    
+
     sum = 0
+    # print(final_list)
     while final_list:
-      i = -1
-      sum += final_list[-1][0].data
-      while len(final_list) >= -i and (final_list[i][1] == final_list[-1][1]):
-        i -= 1
-      final_list = final_list[:i+1]
-    
+      i = 0
+      sum += final_list[0][0].data
+      while len(final_list) > i and final_list[i][1] == final_list[0][1]:
+        i+=1
+      final_list = final_list[i:]
+
     return sum
-      
 
 
 # ***There is no reason to change anything below this line***
@@ -104,7 +112,7 @@ def main():
     for i in tree_input:
       tree.insert(i)
 
-    print(tree.get_right_sum())
+    print(tree.get_left_sum())
 
 if __name__ == "__main__":
   main()
